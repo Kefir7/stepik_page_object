@@ -1,20 +1,26 @@
-Если программа выдает ERROR collecting test_main_page.py и ERROR collecting test_product_page.py
-Замените в test_product_page.py 
-вместо
+## Исправление импортов
+
+Замените в тестовых файлах:
+
+### В `test_product_page.py`
+```python
+# Было:
 from pages.product_page import ProductPage
 from pages.login_page import LoginPage
 from pages.basket_page import BasketPage
-это 
+
+# Стало:
 from .pages.product_page import ProductPage
 from .pages.login_page import LoginPage
 from .pages.basket_page import BasketPage
 
-И в test_main_page.py
-вместо
+### В `test_main_page.py`
+# Было:
 from pages.main_page import MainPage
 from pages.login_page import LoginPage
 from pages.basket_page import BasketPage
-это
+
+# Стало:
 from .pages.main_page import MainPage
 from .pages.login_page import LoginPage
 from .pages.basket_page import BasketPage
