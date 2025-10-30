@@ -7,7 +7,28 @@ class ProductPage(BasePage):
     def add_to_basket(self):
         add_button = self.browser.find_element(*ProductPageLocators.ADD_TO_BASKET_BUTTON)
         add_button.click()
-        self.solve_quiz_and_get_code()
+        # self.solve_quiz_and_get_code()
+        self.solve_quiz_if_present()
+        
+    def solve_quiz_if_present(self):
+        try:
+            # Пробуем переключиться на alert
+            alert = self.browser.switch_to.alert
+            # Если alert есть - решаем задачу
+            x = alert.text.split(" ")[2]
+            answer = str(math.log(abs((12 * math.sin(float(x))))))
+            alert.send_keys(answer)
+            alert.accept()
+            try:
+                alert = self.browser.switch_to.alert
+                alert_text = alert.text
+                print(f"Your code: {alert_text}")
+                alert.accept()
+            except NoAlertPresentException:
+                print("No second alert presented")
+        except NoAlertPresentException:
+            # Если alert нет - просто продолжаем
+            print("No alert presented - skipping quiz")
 
     def should_be_product_added_to_basket(self):
         self.should_be_success_message()

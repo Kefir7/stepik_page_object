@@ -1,8 +1,46 @@
 import pytest
+import time
 from .pages.product_page import ProductPage
 from .pages.locators import ProductPageLocators
 from .pages.login_page import LoginPage
 from .pages.basket_page import BasketPage
+
+
+class TestUserAddToBasketFromProductPage:
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        # Открыть страницу регистрации
+        link = "http://selenium1py.pythonanywhere.com/accounts/login/"
+        page = LoginPage(browser, link)
+        page.open()
+        
+        # Зарегистрировать нового пользователя
+        email = str(time.time()) + "@fakemail.org"
+        password = "Qwe123456789"
+        page.register_new_user(email, password)
+        
+        # Проверить, что пользователь залогинен
+        page.should_be_authorized_user()
+        
+    def test_user_cant_see_success_message(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+        page = ProductPage(browser, link)
+        page.open()
+        
+        # Проверяем, что нет сообщения об успехе
+        page.should_not_be_success_message()
+
+    def test_user_can_add_product_to_basket(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+        page = ProductPage(browser, link)
+        page.open()
+        
+        # Добавляем товар в корзину
+        page.add_to_basket()
+        
+        # Проверяем сообщения
+        page.should_be_product_added_to_basket()
+
 
 def test_guest_can_add_product_to_basket_1(browser):
     link = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/?promo=newYear"
@@ -103,3 +141,7 @@ def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
     
     basket_page.should_not_be_basket_items()
     basket_page.should_be_empty_basket_text()
+    
+    
+
+    
