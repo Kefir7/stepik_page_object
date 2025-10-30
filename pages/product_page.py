@@ -10,6 +10,18 @@ class ProductPage(BasePage):
         # self.solve_quiz_and_get_code()
         self.solve_quiz_if_present()
         
+    def should_not_be_success_message_after_adding(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message should not be present after adding product to basket"
+
+    def should_not_be_success_message_on_page(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message should not be present on product page"
+
+    def should_disappear_success_message(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message should disappear after adding product to basket"  
+          
     def solve_quiz_if_present(self):
         try:
             # Пробуем переключиться на alert
