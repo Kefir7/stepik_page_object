@@ -1,6 +1,6 @@
 ## Исправление импортов
 
-Замените в тестовых файлах:
+Замените в тестовых файлах: если будут ошибки ERROR collecting test_product_page.py и ERROR collecting test_main_page.py
 
 ### В `test_product_page.py`
 ```python
