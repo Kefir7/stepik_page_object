@@ -20,3 +20,8 @@ class ProductPageLocators():
     MESSAGE_PRODUCT_NAME = (By.CSS_SELECTOR, "div.alert-success strong")
     BASKET_TOTAL_MESSAGE = (By.CSS_SELECTOR, "div.alert-info")
     BASKET_TOTAL = (By.CSS_SELECTOR, "div.alert-info strong")
+    
+class BasePageLocators():
+    LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
+    LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
+    
